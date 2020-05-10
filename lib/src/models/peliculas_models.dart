@@ -50,6 +50,18 @@ class Pelicula {
       overview          = json['overview'];
       releaseDate       = json['release_date'];
   }
-
-  //ME FALTA ME HE QUEDADO A MEDIAS
 }
+
+class Peliculas{
+    List<Pelicula> item = List();
+
+    Peliculas();
+
+    Peliculas.fromJsonList(List<dynamic> jsonList){
+        if(jsonList == null) return;
+        for (var valor in jsonList) {
+          final peliculaTemporal = Pelicula.fromJson(valor);
+          item.add(peliculaTemporal);
+        }
+    }
+  }
