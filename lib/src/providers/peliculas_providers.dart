@@ -9,7 +9,16 @@ class PeliculasProvider{
   String _lenguaje='es-ES';
   String _url='api.themoviedb.org';
 
-  PeliculasProvider();
+  //Funcion Independiente porque Duplicaba el mismo codigo
+  Future <List<Pelicula>> _procesarRespuesta(Uri url) async{
+    //respuesta almacenara los datos de la peticion url 
+    final respuesta = await http.get(url);
+    //datosDecodificados almacenara la conversion de el dato recibido que se almaceno en respuesta
+    final datosDecodificados = json.decode(respuesta.body);//json.decode decodifica 
+    //almacenaPelicula es una instancia de la clase Peliculas 
+    final almacenaPelicula = Peliculas.fromJsonList(datosDecodificados['results']);//enviara los datos ya decodificados en el constructor
+    return almacenaPelicula.item;//Regresa la Lista que se llama item
+  }
 
   //funcion que servira en el Future Builder para pedir y almacenar los datos
   Future <List<Pelicula>> getEnCines() async{
@@ -18,32 +27,16 @@ class PeliculasProvider{
       'api_key' : _apiKey,
       'language': _lenguaje,
     });
-
-    //respuesta almacenara los datos de la peticion url 
-    final respuesta = await http.get(url);
-    //datosDecodificados almacenara la conversion de el dato recibido que se almaceno en respuesta
-    final datosDecodificados = json.decode(respuesta.body);//json.decode decodifica 
-    //almacenaPelicula es una instancia de la clase Peliculas 
-    final almacenaPelicula = Peliculas.fromJsonList(datosDecodificados['results']);//enviara los datos ya decodificados en el constructor
-    return almacenaPelicula.item;//Regresa la Lista que se llama item
+      //Codigo Optimizado
+    return _procesarRespuesta(url);
   }
 
   Future <List<Pelicula>> getPopulares() async{
-
     final url = Uri.https(_url, '3/movie/popular',{
        'api_key' : _apiKey,
       'language': _lenguaje,
     });
-
-    //respuesta almacenara los datos de la peticion url 
-    final respuesta = await http.get(url);
-    //datosDecodificados almacenara la conversion de el dato recibido que se almaceno en respuesta
-    final datosDecodificados = json.decode(respuesta.body);//json.decode decodifica 
-    //almacenaPelicula es una instancia de la clase Peliculas 
-    final almacenaPelicula = Peliculas.fromJsonList(datosDecodificados['results']);//enviara los datos ya decodificados en el constructor
-    
-    return almacenaPelicula.item;//Regresa la Lista que se llama item
-
+    //Codigo Optimizado
+    return _procesarRespuesta(url);
   }
-
 }
