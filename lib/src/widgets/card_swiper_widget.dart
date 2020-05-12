@@ -5,7 +5,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 class MyCardSwiper extends StatelessWidget {
   final List<Pelicula> peliculas;
 
-  const MyCardSwiper({this.peliculas, Key key}) : super(key: key);
+  const MyCardSwiper({@required this.peliculas, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class MyCardSwiper extends StatelessWidget {
       padding: EdgeInsets.only(top: 10),
       child: Swiper(
         layout: SwiperLayout.STACK,
-        itemWidth: _myScreenSize.width * 0.7,
+        itemWidth: _myScreenSize.width * 0.6,
         itemHeight: _myScreenSize.height * 0.5,
         itemCount: peliculas.length,
         itemBuilder: (context, index) {

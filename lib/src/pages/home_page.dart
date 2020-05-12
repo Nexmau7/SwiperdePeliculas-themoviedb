@@ -1,4 +1,5 @@
 import 'package:cartelera_de_peliculas_swiper/src/providers/peliculas_providers.dart';
+import 'package:cartelera_de_peliculas_swiper/src/widgets/horizontal_swiper_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cartelera_de_peliculas_swiper/src/widgets/card_swiper_widget.dart';
@@ -17,13 +18,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+     // backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text('Peliculas'),
       ),
       body: Container(
         child: Column(
-          children: <Widget>[_swiperTarjetasPrincipal()],
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            _swiperTarjetasPrincipal(),
+            _horizontalCard(context),
+          ],
         ),
       ),
     );
@@ -34,7 +39,9 @@ class _HomePageState extends State<HomePage> {
       future: datoPelicula.getEnCines(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
-          return MyCardSwiper(peliculas: snapshot.data,);
+          return MyCardSwiper(
+            peliculas: snapshot.data,
+          );
         } else {
           return Container(
             height: 400,
@@ -44,6 +51,36 @@ class _HomePageState extends State<HomePage> {
           );
         }
       },
+    );
+  }
+
+  Widget _horizontalCard(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              padding: EdgeInsets.only(left:20.0),
+              child: Text('Populares',
+                  style: Theme.of(context).textTheme.subhead)),
+          SizedBox(
+            height: 15,
+          ),
+          FutureBuilder(
+            future: datoPelicula.getPopulares(),
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              if (snapshot.hasData) {
+                return MyHorizontalSwiper(
+                  datoPeli: snapshot.data,
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
