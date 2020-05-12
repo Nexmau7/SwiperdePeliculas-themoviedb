@@ -1,3 +1,4 @@
+import 'package:cartelera_de_peliculas_swiper/src/providers/peliculas_providers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cartelera_de_peliculas_swiper/src/widgets/card_swiper_widget.dart';
@@ -28,6 +29,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _swiperTarjetasPrincipal() {
+    //Prueba de Funcionamiento de peticion de la Api Json 
+    final datoPelicula = PeliculasProvider();
+    datoPelicula.getEnCines();
     return MyCardSwiper();
   }
 }

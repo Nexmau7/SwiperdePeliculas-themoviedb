@@ -16,7 +16,7 @@ class Pelicula {
   double voteAverage;
   String overview;
   String releaseDate;
-
+  
   Pelicula({
     this.popularity,
     this.voteCount,
@@ -34,6 +34,7 @@ class Pelicula {
     this.releaseDate,
   });
 
+  //Este constructor servira para almacenar en cada variable los datos del json de la api
   Pelicula.fromJson(Map<String,dynamic> json){
       popularity        = json['popularity'] / 1;
       voteCount         = json['vote_count'];
@@ -53,14 +54,19 @@ class Pelicula {
 }
 
 class Peliculas{
+
+    //Aqui almacenara los datos del json recibido por medio del constructor
     List<Pelicula> item = List();
 
     Peliculas();
 
+    //Este constructor recibira el json decodificado y lo almacenara en lista item
     Peliculas.fromJsonList(List<dynamic> jsonList){
         if(jsonList == null) return;
         for (var valor in jsonList) {
+          //
           final peliculaTemporal = Pelicula.fromJson(valor);
+          //lista item almacenara todas las variables de la clase Pelicula.fromJson
           item.add(peliculaTemporal);
         }
     }
