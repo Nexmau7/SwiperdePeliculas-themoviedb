@@ -28,4 +28,22 @@ class PeliculasProvider{
     return almacenaPelicula.item;//Regresa la Lista que se llama item
   }
 
+  Future <List<Pelicula>> getPopulares() async{
+
+    final url = Uri.https(_url, '3/movie/popular',{
+       'api_key' : _apiKey,
+      'language': _lenguaje,
+    });
+
+    //respuesta almacenara los datos de la peticion url 
+    final respuesta = await http.get(url);
+    //datosDecodificados almacenara la conversion de el dato recibido que se almaceno en respuesta
+    final datosDecodificados = json.decode(respuesta.body);//json.decode decodifica 
+    //almacenaPelicula es una instancia de la clase Peliculas 
+    final almacenaPelicula = Peliculas.fromJsonList(datosDecodificados['results']);//enviara los datos ya decodificados en el constructor
+    
+    return almacenaPelicula.item;//Regresa la Lista que se llama item
+
+  }
+
 }

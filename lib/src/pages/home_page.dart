@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     //Prueba de Funcionamiento de peticion de la Api Json 
     final datoPelicula = PeliculasProvider();
     datoPelicula.getEnCines();
+    datoPelicula.getPopulares();
     return MyCardSwiper();
   }
 }
