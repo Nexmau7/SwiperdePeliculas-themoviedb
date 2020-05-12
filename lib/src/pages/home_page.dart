@@ -11,6 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //Instancia para pedir datos de la API
+  final datoPelicula = PeliculasProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,21 +21,29 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Peliculas'),
       ),
-      body:Container(
+      body: Container(
         child: Column(
-          children: <Widget>[
-             _swiperTarjetasPrincipal()
-          ],
+          children: <Widget>[_swiperTarjetasPrincipal()],
         ),
       ),
     );
   }
 
   Widget _swiperTarjetasPrincipal() {
-    //Prueba de Funcionamiento de peticion de la Api Json 
-    final datoPelicula = PeliculasProvider();
-    datoPelicula.getEnCines();
-    datoPelicula.getPopulares();
-    return MyCardSwiper();
+    return FutureBuilder(
+      future: datoPelicula.getEnCines(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          return MyCardSwiper(peliculas: snapshot.data,);
+        } else {
+          return Container(
+            height: 400,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
   }
 }

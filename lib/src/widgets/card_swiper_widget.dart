@@ -1,8 +1,9 @@
+import 'package:cartelera_de_peliculas_swiper/src/models/peliculas_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class MyCardSwiper extends StatelessWidget {
-  final List<String> peliculas;
+  final List<Pelicula> peliculas;
 
   const MyCardSwiper({this.peliculas, Key key}) : super(key: key);
 
@@ -12,20 +13,20 @@ class MyCardSwiper extends StatelessWidget {
     final _myScreenSize = MediaQuery.of(context).size;
 
     return Container(
-      padding: EdgeInsets.only(top:10),
+      padding: EdgeInsets.only(top: 10),
       child: Swiper(
         layout: SwiperLayout.STACK,
         itemWidth: _myScreenSize.width * 0.7,
         itemHeight: _myScreenSize.height * 0.5,
-        itemCount: 3,
+        itemCount: peliculas.length,
         itemBuilder: (context, index) {
           return ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.network(
-                  'https://images-na.ssl-images-amazon.com/images/I/718-YbPovjL._AC_SY741_.jpg',
-              fit: BoxFit.fill,//Cambiar por Cover Otro Rato
-            )
-          );
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                image: NetworkImage(peliculas[index].getPosterImage()),
+                fit: BoxFit.fill,
+              ));
         },
       ),
     );
