@@ -10,6 +10,7 @@ class PeliculasProvider{
   String _lenguaje='es-ES';
   String _url='api.themoviedb.org';
   int _pagePopular = 0;
+  bool _cargando = false;
 
   //PATRON BLOC
 
@@ -51,8 +52,11 @@ class PeliculasProvider{
   }
 
   Future <List<Pelicula>> getPopulares() async{
+    //Es para que el controller no haga demasiadas peticiones repetidas
+    if(_cargando) return [];
+    _cargando = true;
 
-    _pagePopular++;
+    _pagePopular++;//Contador de Paginas
 
     final url = Uri.https(_url, '3/movie/popular',{
         'api_key'  : _apiKey,
@@ -66,6 +70,7 @@ class PeliculasProvider{
     //SINK es el que inicia el STREAM  
     popularSink(_popularBloc);
 
+    _cargando = false;
     return resp;
   }
 }

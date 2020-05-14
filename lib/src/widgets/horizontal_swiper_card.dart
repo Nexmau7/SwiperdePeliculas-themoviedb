@@ -28,17 +28,18 @@ class MyHorizontalSwiper extends StatelessWidget {
 
     return Container(
       height: _screenSize.height * 0.3,
-      child: PageView(
+      child: PageView.builder(
         pageSnapping: false,
         controller: _controller,
-        children: _tarjetas(context),
+        itemBuilder: (context,index){
+          return _tarjeta(context,datoPeli[index]);
+        },
       ),
     );
   }
 
-  List<Widget> _tarjetas(BuildContext context) {
-    return datoPeli.map((listPeli) {
-      return Container(
+  Widget _tarjeta(BuildContext context, Pelicula dato){
+    return Container(
         margin: EdgeInsets.only(right: 15.0),
         child: Column(
           children: <Widget>[
@@ -46,7 +47,7 @@ class MyHorizontalSwiper extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
                 placeholder: AssetImage('assets/img/no-image.jpg'),
-                image: NetworkImage(listPeli.getPosterImage()),
+                image: NetworkImage(dato.getPosterImage()),
                 fit: BoxFit.cover,
                 height: 160.0,
               ),
@@ -54,12 +55,11 @@ class MyHorizontalSwiper extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(listPeli.title,
+            Text(dato.title,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subhead)
           ],
         ),
       );
-    }).toList();
   }
 }
