@@ -16,7 +16,17 @@ class _HomePageState extends State<HomePage> {
   final datoPelicula = PeliculasProvider();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    datoPelicula.disposeStream();//Cierra el Patron Bloc
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //Se inicia para tener datos para el Stream 
+    datoPelicula.getPopulares();
+
     return Scaffold(
      // backgroundColor: Colors.grey,
       appBar: AppBar(
@@ -67,12 +77,14 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 15,
           ),
-          FutureBuilder(
-            future: datoPelicula.getPopulares(),
+          //Usando Patron Bloc
+          StreamBuilder(
+            stream: datoPelicula.popularStream,
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               if (snapshot.hasData) {
                 return MyHorizontalSwiper(
                   datoPeli: snapshot.data,
+                  paginaSiguiente: datoPelicula.getPopulares,
                 );
               } else {
                 return CircularProgressIndicator();

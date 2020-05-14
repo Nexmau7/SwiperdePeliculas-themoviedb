@@ -3,18 +3,34 @@ import 'package:flutter/material.dart';
 
 class MyHorizontalSwiper extends StatelessWidget {
   final List<Pelicula> datoPeli;
-  const MyHorizontalSwiper({@required this.datoPeli, Key key})
+  final Function paginaSiguiente;
+  const MyHorizontalSwiper({@required this.datoPeli, @required this.paginaSiguiente, Key key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
 
+    final _controller = PageController(
+      initialPage: 1,
+      viewportFraction: 0.3,
+    );
+
+      //Necesita estar escuchando el controlador del PageView
+    _controller.addListener(() { 
+
+    if(_controller.position.pixels <= _controller.position.maxScrollExtent - 200){
+        paginaSiguiente();//Permite llamar mas peliculas
+    }
+
+    });
+
+
     return Container(
       height: _screenSize.height * 0.3,
       child: PageView(
         pageSnapping: false,
-        controller: PageController(initialPage: 1, viewportFraction: 0.3),
+        controller: _controller,
         children: _tarjetas(context),
       ),
     );
@@ -38,11 +54,9 @@ class MyHorizontalSwiper extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              listPeli.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subhead
-            )
+            Text(listPeli.title,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.subhead)
           ],
         ),
       );
