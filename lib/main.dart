@@ -1,3 +1,4 @@
+import 'package:cartelera_de_peliculas_swiper/src/pages/detalle_page.dart';
 import 'package:cartelera_de_peliculas_swiper/src/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        'detalle':(context)=>DetallePage(),
       },
     );
   }

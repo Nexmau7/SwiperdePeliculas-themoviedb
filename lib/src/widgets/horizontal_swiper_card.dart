@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class MyHorizontalSwiper extends StatelessWidget {
   final List<Pelicula> datoPeli;
   final Function paginaSiguiente;
-  const MyHorizontalSwiper({@required this.datoPeli, @required this.paginaSiguiente, Key key})
+
+  const MyHorizontalSwiper({@required this.datoPeli, @required this.paginaSiguiente, Key key,})
       : super(key: key);
 
   @override
@@ -39,7 +40,7 @@ class MyHorizontalSwiper extends StatelessWidget {
   }
 
   Widget _tarjeta(BuildContext context, Pelicula dato){
-    return Container(
+    final _tarjeta = Container(
         margin: EdgeInsets.only(right: 15.0),
         child: Column(
           children: <Widget>[
@@ -60,6 +61,14 @@ class MyHorizontalSwiper extends StatelessWidget {
                 style: Theme.of(context).textTheme.subhead)
           ],
         ),
+      );
+
+
+      return GestureDetector(
+        child: _tarjeta,
+        onTap: (){
+          Navigator.pushNamed(context, 'detalle',arguments: dato);
+        },
       );
   }
 }

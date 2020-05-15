@@ -59,6 +59,13 @@ class Pelicula {
       return 'https://media.istockphoto.com/vectors/error-template-icon-dead-site-page-not-found-404-trouble-with-system-vector-id1151674037';
     }
   }
+  getBackDorpPathImage(){
+    if(backdropPath != null){
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }else{
+      return 'https://media.istockphoto.com/vectors/error-template-icon-dead-site-page-not-found-404-trouble-with-system-vector-id1151674037';
+    }
+  }
 
 }
 
