@@ -2,6 +2,9 @@
 
 
 class Pelicula {
+
+  String claveHero;
+  
   double popularity;
   int voteCount;
   bool video;

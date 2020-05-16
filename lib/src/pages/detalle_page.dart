@@ -64,11 +64,14 @@ class DetallePage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(25),
-            child: Image(
-              image: NetworkImage(pelicula.getPosterImage()),
-              height: 150,
+          Hero(
+            tag: pelicula.claveHero,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Image(
+                image: NetworkImage(pelicula.getPosterImage()),
+                height: 150,
+              ),
             ),
           ),
           SizedBox(
