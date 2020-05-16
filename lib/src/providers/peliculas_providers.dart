@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cartelera_de_peliculas_swiper/src/models/actores_modelo.dart';
 import 'package:http/http.dart' as http;
 import 'package:cartelera_de_peliculas_swiper/src/models/peliculas_models.dart';
 
@@ -73,4 +74,23 @@ class PeliculasProvider{
     _cargando = false;
     return resp;
   }
+
+  Future<List<Actor>> getActores(String idPelicula) async{
+
+    final url = Uri.https(_url, '3/movie/$idPelicula/credits',{
+        'api_key'  : _apiKey,
+        'language' : _lenguaje,
+    });
+
+    final respuesta = await http.get(url);
+
+    final datosDecodificados = json.decode(respuesta.body);//json.decode decodifica 
+    //almacenaPelicula es una instancia de la clase Peliculas 
+
+    final almacenaPelicula = Actores.fromJsonList(datosDecodificados['cast']);
+
+    return almacenaPelicula.item;
+
+  }
+
 }
