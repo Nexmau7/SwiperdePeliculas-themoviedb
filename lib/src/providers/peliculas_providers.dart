@@ -93,4 +93,16 @@ class PeliculasProvider{
 
   }
 
+  Future <List<Pelicula>> getBusquedaPeliculas(String query) async{
+    //utilice URI para armar la url con sus campos necesarios
+    final url = Uri.https(_url, '3/search/movie',{
+      'api_key' : _apiKey,
+      'language': _lenguaje,
+      'query'   : query,
+    });
+      //Codigo Optimizado
+    return await _procesarRespuesta(url);
+  }
+ 
+
 }

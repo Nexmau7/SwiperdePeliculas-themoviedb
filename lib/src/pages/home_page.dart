@@ -1,3 +1,4 @@
+import 'package:cartelera_de_peliculas_swiper/search/search_delegate.dart';
 import 'package:cartelera_de_peliculas_swiper/src/providers/peliculas_providers.dart';
 import 'package:cartelera_de_peliculas_swiper/src/widgets/horizontal_swiper_card.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,26 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    datoPelicula.disposeStream();//Cierra el Patron Bloc
+    datoPelicula.disposeStream(); //Cierra el Patron Bloc
   }
 
   @override
   Widget build(BuildContext context) {
-    //Se inicia para tener datos para el Stream 
+    //Se inicia para tener datos para el Stream
     datoPelicula.getPopulares();
 
     return Scaffold(
-     // backgroundColor: Colors.grey,
+      // backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text('Peliculas'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: (){
+              showSearch(context: context, delegate: SearhApi());
+            },
+          )
+        ],
       ),
       body: Container(
         child: Column(
@@ -71,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-              padding: EdgeInsets.only(left:20.0),
+              padding: EdgeInsets.only(left: 20.0),
               child: Text('Populares',
                   style: Theme.of(context).textTheme.subhead)),
           SizedBox(
