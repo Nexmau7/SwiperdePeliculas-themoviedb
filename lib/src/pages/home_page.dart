@@ -41,13 +41,15 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            _swiperTarjetasPrincipal(),
-            _horizontalCard(context),
-          ],
+      body: SingleChildScrollView(
+              child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              _swiperTarjetasPrincipal(),
+              _horizontalCard(context),
+            ],
+          ),
         ),
       ),
     );

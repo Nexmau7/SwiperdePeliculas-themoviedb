@@ -29,7 +29,7 @@ class MyHorizontalSwiper extends StatelessWidget {
     });
 
     return Container(
-      height: _screenSize.height * 0.3,
+      height: _screenSize.height * 0.35,
       child: PageView.builder(
         pageSnapping: false,
         controller: _controller,
